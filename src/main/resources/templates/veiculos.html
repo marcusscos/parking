@@ -1,0 +1,56 @@
+<!-- filepath: /home/kali/projects/parking/src/main/resources/templates/veiculos.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Veículos</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <h1>Lista de Veículos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Placa</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+                <th>Custo por Hora</th>
+                <th>Preço Inicial</th>
+                <th>Preço Final</th>
+                <th>Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="veiculo : ${veiculos}">
+                <td th:text="${veiculo.id}">ID</td>
+                <td th:text="${veiculo.placa}">Placa</td>
+                <td th:text="${veiculo.entrada}">Entrada</td>
+                <td th:text="${veiculo.saida}">Saída</td>
+                <td th:text="${veiculo.custoPorHora}">Custo por Hora</td>
+                <td th:text="${veiculo.custoPorHora}">Preço Inicial</td>
+                <td th:text="${veiculo.calcularCusto()}">Preço Final</td>
+                <td th:text="${veiculo.pago ? 'Sim' : 'Não'}">Pago</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Registrar Entrada</h2>
+    <form th:action="@{/veiculos/entrada}" method="post">
+        <label for="placa">Placa:</label>
+        <input type="text" id="placa" name="placa">
+        <label for="custoPorHora">Custo por Hora:</label>
+        <input type="text" id="custoPorHora" name="custoPorHora">
+        <button type="submit">Registrar Entrada</button>
+    </form>
+
+    <h2>Registrar Saída</h2>
+    <form th:action="@{/veiculos/saida}" method="post">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id">
+        <button type="submit">Registrar Saída</button>
+    </form>
+
+    <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></div>
+    <div th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></div>
+</body>
+</html>
