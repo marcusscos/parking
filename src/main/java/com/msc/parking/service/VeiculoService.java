@@ -23,8 +23,9 @@ public class VeiculoService {
         if (custoPorHora == null || custoPorHora < 5) {
             throw new IllegalArgumentException("O custo por hora deve ser um número válido e no mínimo 5.");
         }
-        if (veiculoRepository.existsByPlaca(placa)) {
-            throw new IllegalArgumentException("Placa já registrada.");
+        Optional<Veiculo> veiculoExistente = veiculoRepository.findByPlaca(placa);
+        if (veiculoExistente.isPresent() && !veiculoExistente.get().isPago()) {
+            throw new IllegalArgumentException("Placa já registrada e não paga.");
         }
         Veiculo veiculo = new Veiculo();
         veiculo.setPlaca(placa);
